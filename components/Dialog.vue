@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed, useSlots } from "vue";
+import { onClickOutside } from "@vueuse/core";
 const slots = useSlots();
 
 const props = withDefaults(
@@ -11,12 +12,10 @@ const props = withDefaults(
 
 const emit = defineEmits(["close"]);
 
-const handleClick = (event: Event) => {
-  const target = event.target as HTMLElement | null;
-  if (target?.closest(".dialog-content-container") === null) {
-    emit("close");
-  }
-};
+const dialog = ref(null);
+onClickOutside(dialog, () => {
+  emit("close");
+});
 
 const sizeClass = computed(() => {
   switch (props.size) {
@@ -45,10 +44,7 @@ const sizeClass = computed(() => {
   >
     <div class="fixed inset-0 bg-gray-500/75" />
 
-    <div
-      class="fixed inset-0 z-10 w-screen overflow-y-auto"
-      @click="handleClick"
-    >
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
       <div
         data-testid="dialog-content-container-parent"
         class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"

@@ -144,9 +144,12 @@ const filters = computed(() => {
   return newFilters;
 });
 
-const resend = async () => {
+const resend = async (channelId: string) => {
   const { data } = await useApi("/server-content/resend", {
-    method: "get",
+    method: "post",
+    body: {
+      channel_id: channelId,
+    },
   });
 
   if (data.value) {
@@ -182,9 +185,7 @@ onMounted(() => {
       </div>
       <div class="flex gap-4">
         <div>
-          <Button size="sm" class="px-2" color="primary" @click="resend">
-            Resend
-          </Button>
+          <TextChannelSelector title="Resend" @select="resend" />
         </div>
 
         <NuxtLink to="/server-content/message">
