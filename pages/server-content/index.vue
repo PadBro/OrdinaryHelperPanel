@@ -99,12 +99,12 @@ const loadServerContent = async (page = 1) => {
     serverContents.value = data.value.data ?? [];
 
     pagination.value = {
-      total: data.value.total,
-      currentPage: data.value.current_page,
-      perPage: data.value.per_page,
-      from: data.value.from,
-      to: data.value.to,
-      totalPages: data.value.last_page,
+      total: data.value.meta.total,
+      currentPage: data.value.meta.current_page,
+      perPage: data.value.meta.per_page,
+      from: data.value.meta.from,
+      to: data.value.meta.to,
+      totalPages: data.value.meta.last_page,
     };
   }
 
